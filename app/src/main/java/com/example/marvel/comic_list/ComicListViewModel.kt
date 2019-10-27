@@ -1,21 +1,25 @@
 package com.example.marvel.comic_list
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import androidx.paging.PagedList
-import com.example.marvel.ComicResult
-import com.example.marvel.DateUtil
-import com.example.marvel.RestApi
+import com.example.marvel.*
 import com.example.marvel.comic_list.repository.ComicsRepository
 import com.example.marvel.comic_list.repository.Listing
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.IOException
 import java.util.*
 
 class ComicListViewModel() : ViewModel() {
 
 
-    val repository = ComicsRepository(RestApi.create())
+    val restApi = RestApi.create()
+
+    val repository = ComicsRepository(restApi)
 
 //    private val dateRange = MutableLiveData<String>()
 
@@ -24,6 +28,9 @@ class ComicListViewModel() : ViewModel() {
 
     private val _comics = Transformations.switchMap(repoResult, { it.pagedList })
     val comics: LiveData<PagedList<ComicResult>> = _comics
+
+    private val _charactersLD = MutableLiveData<Pair<String, List<CharacterResult>>>()
+    val charactersLD: LiveData<Pair<String, List<CharacterResult>>> = _charactersLD
 
     private
     val _startDateLD = MutableLiveData<Date>().apply {
@@ -38,6 +45,43 @@ class ComicListViewModel() : ViewModel() {
 
     fun tryChangeDate(filter: Filter) {
         println("tryChangeDate")
+    }
+
+    fun testtest(id: String) {
+        viewModelScope.launch {
+
+            withContext(Dispatchers.IO) {
+                try {
+                    val request = restApi.getComic(id)
+                    val response = request.execute()
+                    println("testtesttesttesttesttesttesttesttesttest $id")
+                    val data = response.body()?.data
+                    val items = data?.results ?: emptyList()
+                    println(items.size)
+//                    characters.clear()
+//                    characters.addAll(items)
+                    _charactersLD.postValue(Pair(id, items))
+//            val w = object : Callback<CharacterResponse> {
+//                override fun onFailure(call: Call<CharacterResponse>, t: Throwable) {
+//                }
+//
+//                override fun onResponse(
+//                    call: Call<CharacterResponse>,
+//                    response: Response<CharacterResponse>
+//                ) {
+//                    if (response.isSuccessful) {
+//                        val resp = response.body()
+//                        resp?.data
+//                    }
+//                }
+//
+//
+//            }
+                } catch (ioException: IOException) {
+                    println("%%%%%%%%%%%%%%%%%%%%%")
+                }
+            }
+        }
     }
 
     fun search() {

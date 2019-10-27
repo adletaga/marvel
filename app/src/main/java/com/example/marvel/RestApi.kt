@@ -9,6 +9,7 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface RestApi {
@@ -30,6 +31,12 @@ interface RestApi {
     ): Call<ComicResponse>
 
 
+    @GET("v1/public/comics/{comicId}/characters")
+    fun getComic(
+//        @Query("limit") limit: Int,
+//        @Query("offset") offset: Int,
+        @Path("comicId") comicId: String
+    ): Call<CharacterResponse>
 
 
     companion object {
