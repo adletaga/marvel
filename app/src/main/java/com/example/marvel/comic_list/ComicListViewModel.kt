@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagedList
+import com.example.marvel.ComicResult
 import com.example.marvel.DateUtil
+import com.example.marvel.RestApi
 import com.example.marvel.comic_list.repository.ComicsRepository
 import com.example.marvel.comic_list.repository.Listing
 import java.util.*
@@ -13,7 +15,7 @@ import java.util.*
 class ComicListViewModel() : ViewModel() {
 
 
-    val repository = ComicsRepository(CompicApi.create())
+    val repository = ComicsRepository(RestApi.create())
 
 //    private val dateRange = MutableLiveData<String>()
 

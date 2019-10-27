@@ -1,11 +1,11 @@
 package com.example.marvel.comic_list.repository
 
 import androidx.paging.PositionalDataSource
-import com.example.marvel.comic_list.ComicResult
-import com.example.marvel.comic_list.CompicApi
+import com.example.marvel.ComicResult
+import com.example.marvel.RestApi
 import java.io.IOException
 
-class ComicDataSource(val api: CompicApi, val dateRange: String) :
+class ComicDataSource(val api: RestApi, val dateRange: String) :
     PositionalDataSource<ComicResult>() {
 
 

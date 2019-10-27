@@ -1,4 +1,4 @@
-package com.example.marvel.comic_list
+package com.example.marvel
 
 data class ComicResponse(
     val code: Int,

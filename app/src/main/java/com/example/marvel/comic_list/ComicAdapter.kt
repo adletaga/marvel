@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.marvel.ComicResult
 import com.example.marvel.R
 
 class ComicAdapter : PagedListAdapter<ComicResult, RecyclerView.ViewHolder>(POST_COMPARATOR) {

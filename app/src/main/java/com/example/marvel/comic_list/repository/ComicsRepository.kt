@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.paging.Config
 import androidx.paging.PagedList
 import androidx.paging.toLiveData
-import com.example.marvel.comic_list.ComicResult
-import com.example.marvel.comic_list.CompicApi
+import com.example.marvel.ComicResult
+import com.example.marvel.RestApi
 
-class ComicsRepository(val api: CompicApi) {
+class ComicsRepository(val api: RestApi) {
 
     fun comics(dateRange: String, pageSize: Int): Listing<ComicResult> {
 

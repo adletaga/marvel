@@ -1,4 +1,4 @@
-package com.example.marvel.comic_list
+package com.example.marvel
 
 import android.util.Log
 import okhttp3.HttpUrl
@@ -9,10 +9,9 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface CompicApi {
+interface RestApi {
 
 //    https://gateway.marvel.com/v1/public/comics?apikey=d49e45249024d98b163e5c49e8268918&ts=1&hash=2df5c1901fb7fa0646fc5091731069ad&dateRange=2019-10-01,2019-10-02&format=comic
 
@@ -35,7 +34,7 @@ interface CompicApi {
 
     companion object {
         private const val BASE_URL = "https://gateway.marvel.com/"
-        fun create(): CompicApi {
+        fun create(): RestApi {
             val logger = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
                 Log.d("API", it)
             })
@@ -66,7 +65,7 @@ interface CompicApi {
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-                .create(CompicApi::class.java)
+                .create(RestApi::class.java)
         }
     }
 }

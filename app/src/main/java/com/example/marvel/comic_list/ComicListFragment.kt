@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 
 import androidx.paging.PagedList
+import com.example.marvel.ComicResult
 import com.example.marvel.DateUtil
 
 import com.example.marvel.R
@@ -29,7 +30,7 @@ class ComicListFragment : Fragment(), DateFilterDialog.Companion.Listener {
 //    private val viewModel: ComicListViewModel by viewModels {
 //        object : ViewModelProvider.Factory {
 //            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-//                val repository = ComicsRepository(CompicApi.create())
+//                val repository = ComicsRepository(RestApi.create())
 //                return ComicListViewModel(repository) as T
 //            }
 //        }
@@ -87,8 +88,6 @@ class ComicListFragment : Fragment(), DateFilterDialog.Companion.Listener {
 
         //todo
         viewModel.comics.observe(this, Observer<PagedList<ComicResult>> {
-            println("ssssssssssssss")
-            println(it?.size)
             adapter.submitList(it)
         })
 
@@ -104,4 +103,8 @@ class ComicListFragment : Fragment(), DateFilterDialog.Companion.Listener {
     }
 
 
+    fun goToComic(id: String) {
+
+//        fragmentManager?.beginTransaction().addToBackStack("comic").replace()
+    }
 }

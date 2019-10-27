@@ -2,10 +2,10 @@ package com.example.marvel.comic_list.repository
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
-import com.example.marvel.comic_list.ComicResult
-import com.example.marvel.comic_list.CompicApi
+import com.example.marvel.ComicResult
+import com.example.marvel.RestApi
 
-class ComicDSFactory(val api: CompicApi, val dateRange: String) :
+class ComicDSFactory(val api: RestApi, val dateRange: String) :
     DataSource.Factory<Int, ComicResult>() {
 
     val sourceLiveData = MutableLiveData<ComicDataSource>()
