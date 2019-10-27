@@ -2,6 +2,7 @@ package com.example.marvel.comic_list
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,18 +12,28 @@ import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.example.marvel.ComicResult
 import com.example.marvel.DateUtil
+import com.example.marvel.MainActivity
 
 import com.example.marvel.R
 import kotlinx.android.synthetic.main.comic_list_fragment.*
 import java.util.*
 
-class ComicListFragment : Fragment(), DateFilterDialog.Companion.Listener {
+class ComicListFragment : Fragment(), DateFilterDialog.Companion.Listener, ComicClickCallback {
+
+    override fun onClick(id: String?) {
+        if (id != null) {
+            (activity as MainActivity).goToComic(id)
+        } else {
+            Log.e(TAG, "ERRROOR to go COMIC  =  NO ID")
+        }
+    }
+
     override fun onChange(filter: Filter) {
         viewModel.tryChangeDate(filter)
     }
 
     companion object {
-        val TAG = "ProductListFragment"
+        val TAG = "ComicListFragment"
         fun newInstance() = ComicListFragment()
     }
 
@@ -83,7 +94,7 @@ class ComicListFragment : Fragment(), DateFilterDialog.Companion.Listener {
     }
 
     private fun initAdapter() {
-        val adapter = ComicAdapter()
+        val adapter = ComicAdapter(this)
         list.adapter = adapter
 
         //todo
@@ -103,8 +114,4 @@ class ComicListFragment : Fragment(), DateFilterDialog.Companion.Listener {
     }
 
 
-    fun goToComic(id: String) {
-
-//        fragmentManager?.beginTransaction().addToBackStack("comic").replace()
-    }
 }

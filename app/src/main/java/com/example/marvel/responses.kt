@@ -15,6 +15,6 @@ data class ComicData(
 )
 
 data class ComicResult(// todo replace
-    val id: Int,
+    val id: String,
     val title: String
 )

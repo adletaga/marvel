@@ -10,16 +10,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.marvel.ComicResult
 import com.example.marvel.R
 
-class ComicAdapter : PagedListAdapter<ComicResult, RecyclerView.ViewHolder>(POST_COMPARATOR) {
+class ComicAdapter(val callback: ComicClickCallback) :
+    PagedListAdapter<ComicResult, RecyclerView.ViewHolder>(POST_COMPARATOR) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return ComicViewHolder.create(parent)
+        val comicViewHolder = ComicViewHolder.create(parent)
+        comicViewHolder.itemView.setOnClickListener {
+            callback.onClick(comicViewHolder.getComic()?.id)
+        }
+        return comicViewHolder
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as ComicViewHolder).bind(getItem(position))
-//        println("onBindViewHolder 1 ")
     }
 
     override fun onBindViewHolder(
@@ -27,15 +31,8 @@ class ComicAdapter : PagedListAdapter<ComicResult, RecyclerView.ViewHolder>(POST
         position: Int,
         payloads: MutableList<Any>
     ) {
-//        println("onBindViewHolder 2 ")
         super.onBindViewHolder(holder, position, payloads)
     }
-
-//    override fun getItem(position: Int): ComicResult? {
-////        println("getItem $position")
-//        //todo
-//        return null
-//    }
 
     companion object {
 
@@ -60,17 +57,11 @@ class ComicViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val title: TextView = view.findViewById(R.id.title)
     private var comic: ComicResult? = null
 
-    init {
-        view.setOnClickListener {
-            println("setOnClickListenersetOnClickListenersetOnClickListenersetOnClickListener")
-            println(comic?.id)
-        }
-    }
-
+    fun getComic() = comic
 
     fun bind(comic: ComicResult?) {
+        this.comic = comic
         title.setText(comic?.title ?: "Нет названия")
-//        println("bind")
     }
 
     companion object {
@@ -81,4 +72,8 @@ class ComicViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         }
     }
 
+}
+
+interface ComicClickCallback {
+    fun onClick(id: String?)
 }
